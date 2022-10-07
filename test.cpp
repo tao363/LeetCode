@@ -1,14 +1,9 @@
 #include <iostream>
-#include <vector>
-
-
 using namespace std;
-
-int main(){
-    int i = 42;
-    int j = std::move(i);
-    std::cout << i << endl;
-    std::string s = "hello";
-    std::string t = std::move(s);
-    std::cout << s << endl;
+int main() {
+   #ifdef _WIN64
+      cout << "This is 64 bit system" << endl;
+   #elif _WIN32
+      cout << "This is 32 bit system" << endl;
+   #endif
 }
