@@ -7,6 +7,7 @@ using namespace std;
     当前选择红色    r[i] = min(g(i-1), b(i-1)) + costs[i][0];
     当前选择绿色    g[i] = min(r(i-1), b(i-1)) + costs[i][1];
     当前选择蓝色    b[i] = min(r(i-1), g(i-1)) + costs[i][2];
+                        多状态动态规划
 */
 
 class Solution {

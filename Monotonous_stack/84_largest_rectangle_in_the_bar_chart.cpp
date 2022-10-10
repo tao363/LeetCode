@@ -3,7 +3,7 @@
 #include <stack>
 using namespace std;
 
-class Solution {
+class Solution1 {
 public:
     int largestRectangleArea(vector<int>& heights) {
         stack<int> sta;
@@ -59,8 +59,8 @@ public:
 };
 
 int main(){
-    vector<int> v{2,4};
-    Solution solution;
-    cout <<  solution.largestRectangleArea(v) ;
+    Solution1 so;
+    vector<int> v{2,3,4};
+    cout << so.largestRectangleArea(v);
 
 }
