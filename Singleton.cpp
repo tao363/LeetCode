@@ -4,7 +4,37 @@
 #include <memory>
 #include <mutex>
 using namespace std;
+class Singleton{ 
+public: 
+    typedef shared_ptr<Singleton> Ptr;
+    ~Singleton(){
+        cout << "destructor called !"<< endl;
+    }
+    Singleton(Singleton&) = delete;
+    Singleton& operator =(const Singleton&) = delete;
+    static Ptr Get_instance(){
+        if(m_instance_ptr = nullptr){       
+            lock_guard<mutex> lk(m_mutex);
+            if(m_instance_ptr == nullptr){  
+                m_instance_ptr = shared_ptr<Singleton> (new Singleton);
+            }
+        }
+        return m_instance_ptr;
+    }
 
+private:
+    Singleton(){
+
+    }
+    static Ptr m_instance_ptr;
+    static mutex m_mutex;
+};
+Singleton :: Ptr Singleton::m_instance_ptr = nullptr;
+mutex Singleton:: m_mutex;
+
+
+
+#if 0
 /*
     全局只有一个实例：static特性，同时禁止用户自己声明并定义实例（吧构造函数设为 private）
     线程安全
@@ -123,4 +153,4 @@ public:
 };
 
 
-
+#endif

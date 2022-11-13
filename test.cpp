@@ -1,76 +1,45 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <map>
-#include <algorithm>
+#include<iostream>
+#include<algorithm>
+#include<string>
+
 using namespace std;
 
-vector<char> v;
-int n;
-
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
-
-TreeNode* CreatTree(vector<vector<int>>& nums, vector<TreeNode*>& created){
-   for(int i = 0; i < n; ++i){
-      if(nums[i][0] < nums[i][1]){ //左
-         if(created[nums[i][0]] == nullptr){
-            created[nums[i][0]] = new TreeNode(nums[i][0]);
-         }
-         if(created[nums[i][1]] == nullptr){
-               created[nums[i][1]] = new TreeNode(nums[i][1]);
-         }    
-         created[nums[i][0]]->left = created[nums[i][1]];
-      }
-      else{//右边
-         if(created[nums[i][1]] == nullptr){
-            created[nums[i][1]] = new TreeNode(nums[i][1]);
-         }
-         if(created[nums[i][0]] == nullptr){
-            created[nums[i][0]] = new TreeNode(nums[i][0]);
-         }    
-         created[nums[i][1]]->right = created[nums[i][0]];
-      }
-   }
-   return created[1];
+void ComputePrefix(string s,int next[]){
+    int n = s.length();
+    int q,k;
+    next[0] = 0;
+    for(k=0,q=1;q<n;q++){
+        while(k>0 && s[k]!=s[q])
+            k = next[k];
+        if(s[k]==s[q])
+            k++;
+        next[q] = k;
+    }
 }
-int dfs(TreeNode* root){
-   if(root == nullptr) return 0;
-   //if(root->left == nullptr and root->right == nullptr) return 1;
-   int leftval = dfs(root->left);
-   int rightval = dfs(root->right);
-   int sum = leftval + rightval;
-   if(sum & 1){
-      v[root->val] = 'R';
-   }
-   else {
-      v[root->val] = 'B';
-      // sum --;
-      sum++;
-   }
-   return sum;
+void KMPMatcher(string text,string pattern) {
+    int n = text.length();
+    int m = pattern.length();
+    int next[pattern.length()];
+    ComputePrefix(pattern, next);
+
+    for(int i=0,q=0;i<n;i++) {
+        while(q>0 && pattern[q]!=text[i])
+            q = next[q];
+        if(pattern[q]==text[i])
+            q++;
+        if(q==m)
+        {
+            cout<<"Pattern occurs with shift "<<i-m+1<<endl;
+            q=0;
+        }
+    }
 }
-int main(){
-   cin >> n;
-   v = vector<char> (n+1, 'B');
-   vector<TreeNode*> created = vector<TreeNode*> (n+1, nullptr);
-   vector<vector<int>> nums(n, vector<int>(2,0));
-   int x, y;
-   for(int i = 0; i < n-1; ++i){
-      cin >> x >> y;
-      nums[i][0] = x;
-      nums[i][1] = y;
-   }
-   TreeNode* root = CreatTree(nums, created);
-   dfs(root);
-   for(int i = 1; i <= n; ++i){
-      cout << v[i];
-   }
-   return 0;
+
+int main()
+{
+    string s = "abcdabcdebcd";
+    string p  ="bcd";
+    KMPMatcher(s, p);
+    cout<<endl;
+    return 0;
 }

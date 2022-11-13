@@ -1,26 +1,13 @@
 #include <iostream>
-#include <string>
-
+#include <cmath>
 using namespace std;
 
-class A{
-public: 
-    //static int a;
-
-    A() = default;
-    virtual void fun(){
-        cout << "hello world" << endl;
-    }
-    int m_a;
-    int m_b;
-
-    
-};
-//int A::a = 19;
-
+#define test(t)(t*t)
 int main(){
-    A a;
-    cout<< sizeof(A) << endl;
-    cout << sizeof(int*) << endl;
-    cout<< sizeof(a) << endl;
+	
+	int a = 3, b,c;
+	b = test(a++);
+	c = test(++a);
+	cout << b << ' ' << c <<endl;
+	
 }
